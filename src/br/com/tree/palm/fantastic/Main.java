@@ -1,7 +1,9 @@
+package br.com.tree.palm.fantastic;
+
 import br.com.tree.palm.fantastic.command.CommandExecutor;
-import br.com.tree.palm.fantastic.command.DepositCommand;
-import br.com.tree.palm.fantastic.command.ShowBalanceCommand;
-import br.com.tree.palm.fantastic.command.TransferCommand;
+import br.com.tree.palm.fantastic.command.executable.DepositCommand;
+import br.com.tree.palm.fantastic.command.executable.ShowBalanceCommand;
+import br.com.tree.palm.fantastic.command.executable.TransferCommand;
 
 import java.util.Scanner;
 
@@ -9,17 +11,17 @@ public class Main {
     public static void main(String[] args) {
         CommandExecutor commandExecutor = new CommandExecutor();
         Scanner scanner = new Scanner(System.in);
-        int choosenOption = 0;
+        int chosenOption = 0;
 
         while (true) {
             showMenu();
 
             try {
-                choosenOption = Integer.parseInt(scanner.nextLine());
+                chosenOption = Integer.parseInt(scanner.nextLine());
             } catch (NumberFormatException ignored) {
             }
 
-            switch (choosenOption) {
+            switch (chosenOption) {
                 case 1 -> commandExecutor.executeCommand(new DepositCommand());
                 case 2 -> commandExecutor.executeCommand(new TransferCommand());
                 case 3 -> commandExecutor.executeCommand(new ShowBalanceCommand());
