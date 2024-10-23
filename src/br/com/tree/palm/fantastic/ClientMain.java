@@ -7,7 +7,7 @@ import br.com.tree.palm.fantastic.command.executable.TransferCommand;
 
 import java.util.Scanner;
 
-public class Main {
+public class ClientMain {
     public static void main(String[] args) {
         CommandExecutor commandExecutor = new CommandExecutor();
         Scanner scanner = new Scanner(System.in);
