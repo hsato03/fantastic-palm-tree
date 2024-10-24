@@ -9,6 +9,11 @@ import java.util.Scanner;
 
 public class ClientMain {
     public static void main(String[] args) {
+        // TODO:
+        //  - Criar mensageria cliente/servidor (socket?)
+        //  - Implementar o metodo dos comandos
+        //  - Permitir criar/acessar contas no lado do cliente
+        //  - Criar servidor
         CommandExecutor commandExecutor = new CommandExecutor();
         Scanner scanner = new Scanner(System.in);
         int chosenOption = 0;
