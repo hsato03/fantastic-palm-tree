@@ -1,6 +1,6 @@
-package br.com.tree.palm.fantastic.persistence;
+package main.br.com.fantasticpalmtree.persistence;
 
-import br.com.tree.palm.fantastic.model.BankAccount;
+import main.br.com.fantasticpalmtree.model.BankAccount;
 
 import java.util.HashMap;
 import java.util.Map;

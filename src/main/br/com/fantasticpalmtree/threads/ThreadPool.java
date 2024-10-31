@@ -1,4 +1,4 @@
-package br.com.tree.palm.fantastic.threads;
+package main.br.com.fantasticpalmtree.threads;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

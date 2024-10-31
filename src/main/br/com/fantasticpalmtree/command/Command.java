@@ -1,4 +1,4 @@
-package br.com.tree.palm.fantastic.command;
+package main.br.com.fantasticpalmtree.command;
 
 public interface Command {
     void execute();

@@ -1,6 +1,6 @@
-package br.com.tree.palm.fantastic.command.executable;
+package main.br.com.fantasticpalmtree.command.executable;
 
-import br.com.tree.palm.fantastic.command.Command;
+import main.br.com.fantasticpalmtree.command.Command;
 
 public class DepositCommand implements Command {
 

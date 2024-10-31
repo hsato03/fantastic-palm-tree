@@ -1,9 +1,11 @@
-package br.com.tree.palm.fantastic;
+package main.br.com.fantasticpalmtree;
 
-import br.com.tree.palm.fantastic.command.CommandExecutor;
-import br.com.tree.palm.fantastic.command.executable.DepositCommand;
-import br.com.tree.palm.fantastic.command.executable.ShowBalanceCommand;
-import br.com.tree.palm.fantastic.command.executable.TransferCommand;
+import main.br.com.fantasticpalmtree.command.CommandExecutor;
+import main.br.com.fantasticpalmtree.command.executable.DepositCommand;
+import main.br.com.fantasticpalmtree.command.executable.ShowBalanceCommand;
+import main.br.com.fantasticpalmtree.command.executable.TransferCommand;
+import main.br.com.fantasticpalmtree.config.ConfigLoader;
+import main.br.com.fantasticpalmtree.config.PropertyConstants;
 
 import java.util.Scanner;
 
@@ -12,8 +14,14 @@ public class ClientMain {
         // TODO:
         //  - Criar mensageria cliente/servidor (socket?)
         //  - Implementar o metodo dos comandos
-        //  - Permitir criar/acessar contas no lado do cliente
+        //  - Permitir criar contas no lado do cliente
         //  - Criar servidor
+        ConfigLoader loader = new ConfigLoader();
+        System.out.println(loader.getProperty(PropertyConstants.THREAD_POOL_SIZE));
+        System.out.println(loader.getProperty(PropertyConstants.NEW_REQUEST_INTERVAL));
+        System.out.println(loader.getProperty(PropertyConstants.CUSTOMERS_AMOUNT));
+        System.out.println(loader.getProperty(PropertyConstants.SERVICE_INTERVAL));
+
         CommandExecutor commandExecutor = new CommandExecutor();
         Scanner scanner = new Scanner(System.in);
         int chosenOption = 0;

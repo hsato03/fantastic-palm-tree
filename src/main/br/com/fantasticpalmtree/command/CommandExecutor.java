@@ -1,4 +1,4 @@
-package br.com.tree.palm.fantastic.command;
+package main.br.com.fantasticpalmtree.command;
 
 public class CommandExecutor {
     public void executeCommand(Command command) {
