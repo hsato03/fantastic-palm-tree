@@ -2,11 +2,11 @@ package br.com.tree.palm.fantastic.threads;
 
 import java.util.Queue;
 
-public class Consumer extends Thread {
+public class WorkerThread extends Thread {
     private final Queue<Runnable> taskQueue;
-    private boolean isStopped;
+    private volatile boolean isStopped;
 
-    public Consumer(Queue<Runnable> taskQueue) {
+    public WorkerThread(Queue<Runnable> taskQueue) {
         this.taskQueue = taskQueue;
         this.isStopped = false;
     }
@@ -37,8 +37,13 @@ public class Consumer extends Thread {
         }
     }
 
-    public synchronized void doStop() {
+    public void doStop() {
         isStopped = true;
+        try {
+            this.join();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         this.interrupt();
     }
 }

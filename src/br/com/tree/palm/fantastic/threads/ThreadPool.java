@@ -7,37 +7,39 @@ import java.util.Queue;
 
 public class ThreadPool {
     private final Queue<Runnable> taskQueue;
-    private final List<Consumer> consumers;
-    private boolean isStopped;
+    private final List<WorkerThread> workerThreads;
+    private volatile boolean isStopped;
 
     public ThreadPool(int numThreads) {
         taskQueue = new LinkedList<>();
-        consumers = new ArrayList<>();
+        workerThreads = new ArrayList<>();
         isStopped = false;
 
         for (int i = 0; i < numThreads; i++) {
-            consumers.add(new Consumer(taskQueue));
+            workerThreads.add(new WorkerThread(taskQueue));
         }
 
-        for (Consumer consumer : consumers) {
-            consumer.start();
+        for (WorkerThread workerThread : workerThreads) {
+            workerThread.start();
         }
     }
 
-    public synchronized void submit(Runnable task) {
+    public void submit(Runnable task) {
         if (isStopped) {
             throw new IllegalStateException("Thread Pool is stopped.");
         }
 
-        taskQueue.add(task);
-        notify();
+        synchronized (taskQueue) {
+            taskQueue.add(task);
+            taskQueue.notify();
+        }
     }
 
     public void shutdown() {
         isStopped = true;
 
-        for (Consumer consumer : consumers) {
-            consumer.doStop();
+        for (WorkerThread workerThread : workerThreads) {
+            workerThread.doStop();
         }
     }
 }
