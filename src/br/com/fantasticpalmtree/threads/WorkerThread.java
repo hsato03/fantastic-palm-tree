@@ -13,7 +13,6 @@ public class WorkerThread extends Thread {
 
     public WorkerThread(Queue<Runnable> taskQueue) {
         this.taskQueue = taskQueue;
-        this.isStopped = false;
     }
 
     public void run() {
@@ -21,7 +20,7 @@ public class WorkerThread extends Thread {
             Runnable task;
 
             synchronized (taskQueue) {
-                while (taskQueue.isEmpty()) {
+                while (taskQueue.isEmpty() && !isStopped) {
                     try {
                         taskQueue.wait();
                     } catch (InterruptedException e) {
@@ -46,5 +45,9 @@ public class WorkerThread extends Thread {
     public void doStop() {
         isStopped = true;
         this.interrupt();
+    }
+
+    public synchronized void setStopped(boolean stopped) {
+        isStopped = stopped;
     }
 }
