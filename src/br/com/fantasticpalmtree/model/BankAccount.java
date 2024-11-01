@@ -3,13 +3,21 @@ package br.com.fantasticpalmtree.model;
 public class BankAccount {
     private long id;
 
-    private double currentBalance;
+    private double balance;
 
     private String owner;
 
-    public BankAccount(double currentBalance, String owner) {
-        this.currentBalance = currentBalance;
+    public BankAccount(double balance, String owner) {
+        this.balance = balance;
         this.owner = owner;
+    }
+
+    public synchronized void deposit(double value) {
+        this.balance += value;
+    }
+
+    public synchronized void withdraw(double value) {
+        this.balance -= value;
     }
 
     public long getId() {
@@ -20,12 +28,12 @@ public class BankAccount {
         this.id = id;
     }
 
-    public double getCurrentBalance() {
-        return currentBalance;
+    public double getBalance() {
+        return balance;
     }
 
-    public void setCurrentBalance(double currentBalance) {
-        this.currentBalance = currentBalance;
+    public void setBalance(double balance) {
+        this.balance = balance;
     }
 
     public String getOwner() {
@@ -40,7 +48,7 @@ public class BankAccount {
     public String toString() {
         return "BankAccount{" +
                 "id=" + id +
-                ", currentBalance=" + currentBalance +
+                ", currentBalance=" + balance +
                 ", owner='" + owner + '\'' +
                 '}';
     }

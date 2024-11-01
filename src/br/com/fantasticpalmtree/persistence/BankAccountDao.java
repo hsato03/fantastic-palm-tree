@@ -6,8 +6,19 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BankAccountDao {
+    private static BankAccountDao instance;
+
     private long id = 1;
     Map<Long, BankAccount> records = new HashMap<>();
+
+    private BankAccountDao() {}
+
+    public static synchronized BankAccountDao getInstance() {
+        if (instance == null) {
+            instance = new BankAccountDao();
+        }
+        return instance;
+    }
 
     public void save(BankAccount bankAccount) {
         bankAccount.setId(id);
