@@ -1,4 +1,4 @@
-package main.br.com.fantasticpalmtree.config;
+package br.com.fantasticpalmtree.config;
 
 import java.io.FileInputStream;
 import java.io.IOException;

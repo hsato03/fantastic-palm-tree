@@ -1,4 +1,4 @@
-package main.br.com.fantasticpalmtree.threads;
+package br.com.fantasticpalmtree.threads;
 
 import java.util.Queue;
 

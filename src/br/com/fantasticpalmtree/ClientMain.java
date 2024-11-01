@@ -1,11 +1,11 @@
-package main.br.com.fantasticpalmtree;
+package br.com.fantasticpalmtree;
 
-import main.br.com.fantasticpalmtree.command.CommandExecutor;
-import main.br.com.fantasticpalmtree.command.executable.DepositCommand;
-import main.br.com.fantasticpalmtree.command.executable.ShowBalanceCommand;
-import main.br.com.fantasticpalmtree.command.executable.TransferCommand;
-import main.br.com.fantasticpalmtree.config.ConfigLoader;
-import main.br.com.fantasticpalmtree.config.PropertyConstants;
+import br.com.fantasticpalmtree.command.CommandExecutor;
+import br.com.fantasticpalmtree.command.executable.DepositCommand;
+import br.com.fantasticpalmtree.command.executable.ShowBalanceCommand;
+import br.com.fantasticpalmtree.command.executable.TransferCommand;
+import br.com.fantasticpalmtree.config.ConfigLoader;
+import br.com.fantasticpalmtree.config.PropertyConstants;
 
 import java.util.Scanner;
 

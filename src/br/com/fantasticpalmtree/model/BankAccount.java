@@ -1,4 +1,4 @@
-package main.br.com.fantasticpalmtree.model;
+package br.com.fantasticpalmtree.model;
 
 public class BankAccount {
     private long id;
