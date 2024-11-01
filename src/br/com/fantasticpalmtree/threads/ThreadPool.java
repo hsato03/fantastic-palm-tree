@@ -40,6 +40,11 @@ public class ThreadPool {
 
         for (WorkerThread workerThread : workerThreads) {
             workerThread.setStopped(isStopped);
+
+            synchronized (taskQueue) {
+                taskQueue.notifyAll();
+            }
+
             try {
                 workerThread.join();
             } catch (InterruptedException e) {
