@@ -16,8 +16,18 @@ public class WorkerThread extends Thread {
     }
 
     public void run() {
-        while (!isStopped) {
+        while (true) {
             Runnable task;
+
+            synchronized (taskQueue) {
+                if(isStopped) {
+                    try {
+                        taskQueue.wait();
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
 
             synchronized (taskQueue) {
                 while (taskQueue.isEmpty() && !isStopped) {
