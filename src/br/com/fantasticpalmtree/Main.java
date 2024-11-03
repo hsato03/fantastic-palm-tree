@@ -1,57 +1,51 @@
 package br.com.fantasticpalmtree;
 
-import br.com.fantasticpalmtree.command.DepositCommand;
-import br.com.fantasticpalmtree.command.ShowBalanceCommand;
-import br.com.fantasticpalmtree.command.TransferCommand;
 import br.com.fantasticpalmtree.config.ConfigLoader;
 import br.com.fantasticpalmtree.config.PropertyConstants;
+import br.com.fantasticpalmtree.dto.DepositRequest;
+import br.com.fantasticpalmtree.dto.TransferRequest;
 import br.com.fantasticpalmtree.model.BankAccount;
+import br.com.fantasticpalmtree.model.Client;
+import br.com.fantasticpalmtree.model.Server;
 import br.com.fantasticpalmtree.persistence.BankAccountDao;
-import br.com.fantasticpalmtree.threads.ThreadPool;
 
-import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
         // TODO:
         //  - Criar mensageria cliente/servidor (socket?)
-        //  - Implementar o metodo dos comandos
-        //  - Criar servidor
-        int threadPoolSize = Integer.parseInt(ConfigLoader.getInstance().getProperty(PropertyConstants.THREAD_POOL_SIZE));
+        //  - Implementar o metodo dos comandos - Ok
+        //  - Criar servidor - Ok
 
-        BankAccountDao bankAccountDao = BankAccountDao.getInstance();
-        BankAccount bankAccount = new BankAccount(1000, "Teste");
-        bankAccountDao.save(bankAccount);
+        Server server = Server.getInstance();
+        Thread serverThread = new Thread(server::start);
 
-        ThreadPool pool = new ThreadPool(threadPoolSize);
+        serverThread.start();
 
-        pool.submit(new DepositCommand());
-        pool.submit(new DepositCommand());
-        pool.submit(new DepositCommand());
-        pool.submit(new DepositCommand());
+        List<Client> clients = startClients();
 
-        pool.shutdown();
 
-//        Scanner scanner = new Scanner(System.in);
-//        int chosenOption = 0;
-//
-//        while (true) {
-//            try {
-//                chosenOption = Integer.parseInt(scanner.nextLine());
-//            } catch (NumberFormatException ignored) {
-//            }
-//
-//            switch (chosenOption) {
-//                case 1 -> pool.submit(new DepositCommand());
-//                case 2 -> pool.submit(new TransferCommand());
-//                case 3 -> pool.submit(new ShowBalanceCommand());
-//                case 4 -> {
-//                    System.out.println("Leaving...");
-//                    scanner.close();
-//                    System.exit(0);
-//                }
-//                default -> System.out.println("Invalid option.");
-//            }
-//        }
+        for (int i = 0; i < clients.size() * 100; i++) {
+            Client client = clients.get(i % clients.size());
+            server.addRequest(new DepositRequest(client.getId(), 10*i));
+            server.addRequest(new TransferRequest(client.getId(), 10*i, (client.getId() + 1) % clients.size()));
+        }
+    }
+
+    public static List<Client> startClients() {
+        int customersAmount = Integer.parseInt(ConfigLoader.getInstance().getProperty(PropertyConstants.CUSTOMERS_AMOUNT));
+        int startingBalance = Integer.parseInt(ConfigLoader.getInstance().getProperty(PropertyConstants.BANK_ACCOUNT_INITIAL_BALANCE));
+
+        ArrayList<Client> clients = new ArrayList<>();
+
+        for (int i = 0; i < customersAmount; i++) {
+            Client client = new Client("Client - " + i);
+            clients.add(client);
+            BankAccountDao.getInstance().save(new BankAccount(startingBalance, client));
+        }
+
+        return clients;
     }
 }

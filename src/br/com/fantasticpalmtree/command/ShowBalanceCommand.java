@@ -4,6 +4,8 @@ public class ShowBalanceCommand extends BaseCommand {
 
     @Override
     public void run() {
-        // TODO
+        System.out.println("-----------------Show balance-----------------");
+        bankAccountDao.findAll().forEach(System.out::println);
+        System.out.println("----------------------------------------------");
     }
 }

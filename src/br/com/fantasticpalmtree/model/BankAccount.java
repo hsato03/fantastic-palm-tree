@@ -5,18 +5,29 @@ public class BankAccount {
 
     private double balance;
 
-    private String owner;
+    private final String owner;
 
-    public BankAccount(double balance, String owner) {
+    public BankAccount(double balance, Client owner) {
         this.balance = balance;
-        this.owner = owner;
+        this.owner = owner.getName();
+        id = owner.getId();
     }
 
     public synchronized void deposit(double value) {
+        try {
+            Thread.sleep(50);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         this.balance += value;
     }
 
     public synchronized void withdraw(double value) {
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         this.balance -= value;
     }
 
@@ -30,18 +41,6 @@ public class BankAccount {
 
     public double getBalance() {
         return balance;
-    }
-
-    public void setBalance(double balance) {
-        this.balance = balance;
-    }
-
-    public String getOwner() {
-        return owner;
-    }
-
-    public void setOwner(String owner) {
-        this.owner = owner;
     }
 
     @Override

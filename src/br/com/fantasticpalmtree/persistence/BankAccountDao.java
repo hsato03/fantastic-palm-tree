@@ -2,13 +2,14 @@ package br.com.fantasticpalmtree.persistence;
 
 import br.com.fantasticpalmtree.model.BankAccount;
 
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class BankAccountDao {
     private static BankAccountDao instance;
 
-    private long id = 1;
     Map<Long, BankAccount> records = new HashMap<>();
 
     private BankAccountDao() {}
@@ -21,13 +22,15 @@ public class BankAccountDao {
     }
 
     public void save(BankAccount bankAccount) {
-        bankAccount.setId(id);
-        records.put(id, bankAccount);
-        id++;
+        records.put(bankAccount.getId(), bankAccount);
     }
 
     public BankAccount findById(long id) {
         return records.get(id);
+    }
+
+    public Collection<BankAccount> findAll() {
+        return records.values();
     }
 
     public void remove(long id) {

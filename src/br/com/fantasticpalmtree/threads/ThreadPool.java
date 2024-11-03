@@ -3,10 +3,9 @@ package br.com.fantasticpalmtree.threads;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 
 public class ThreadPool {
-    private final Queue<Runnable> taskQueue;
+    private final LinkedList<Runnable> taskQueue;
     private final List<WorkerThread> workerThreads;
     private volatile boolean isStopped;
 
@@ -32,6 +31,45 @@ public class ThreadPool {
         synchronized (taskQueue) {
             taskQueue.add(task);
             taskQueue.notify();
+        }
+    }
+
+    public void submitPriorityTask(Runnable task) {
+        if (isStopped) {
+            throw new IllegalStateException("Thread Pool is stopped.");
+        }
+
+        synchronized (taskQueue) {
+            stopThreads();
+
+            while (true) {
+                if (allThreadsAreBlocked()) {
+                    taskQueue.add(0,task);
+                    workerThreads.get(0).setStopped(false);
+                    taskQueue.notify();
+
+                    break;
+                }
+            }
+            startThreads();
+        }
+    }
+
+    private boolean allThreadsAreBlocked() {
+        return workerThreads.stream()
+                .filter(wT -> wT.getId() != Thread.currentThread().getId())
+                .allMatch(wT -> wT.getState() == Thread.State.BLOCKED);
+    }
+
+    private void stopThreads() {
+        for (WorkerThread workerThread : workerThreads) {
+            workerThread.setStopped(true);
+        }
+    }
+
+    private void startThreads() {
+        for (WorkerThread workerThread : workerThreads) {
+            workerThread.setStopped(false);
         }
     }
 
