@@ -13,11 +13,6 @@ public class TransferCommand extends BaseCommand {
             return;
         }
 
-        if (fromAccount.getBalance() < value) {
-            System.out.println("Insufficient balance");
-            return;
-        }
-
         fromAccount.withdraw(value);
         toAccount.deposit(value);
 
