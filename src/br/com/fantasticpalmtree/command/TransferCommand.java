@@ -21,6 +21,6 @@ public class TransferCommand extends BaseCommand {
         fromAccount.withdraw(value);
         toAccount.deposit(value);
 
-        System.out.println("[ TRANSFER ] - From: " + fromAccount + " To: " + toAccount + " Value: " + value);
+        System.out.println(String.format("[ TRANSFER ] - From: %s To: %s Value: %.2f", fromAccount, toAccount, value));
     }
 }

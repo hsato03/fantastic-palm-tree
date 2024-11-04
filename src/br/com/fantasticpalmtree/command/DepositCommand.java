@@ -8,6 +8,6 @@ public class DepositCommand extends BaseCommand {
         BankAccount bankAccount = bankAccountDao.findById(id);
         bankAccount.deposit(value);
 
-        System.out.println("[ DEPOSIT ] - Account: " + bankAccount + " Value: " + value);
+        System.out.println(String.format("[ DEPOSIT ] - Account: %s Value: %.2f", bankAccount, value));
     }
 }

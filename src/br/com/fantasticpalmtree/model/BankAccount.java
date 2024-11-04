@@ -45,10 +45,6 @@ public class BankAccount {
 
     @Override
     public String toString() {
-        return "BankAccount{" +
-                "id=" + id +
-                ", currentBalance=" + balance +
-                ", owner='" + owner + '\'' +
-                '}';
+        return String.format("BankAccount{ id=%d , currentBalance=%.2f, owner='%s'}", id, balance, owner);
     }
 }
