@@ -4,11 +4,6 @@ import br.com.fantasticpalmtree.model.BankAccount;
 
 public class TransferCommand extends BaseCommand {
 
-    @Override
-    public void run() {
-        // TODO
-    }
-
     public void run(long from, long to, double value) {
         BankAccount fromAccount = bankAccountDao.findById(from);
         BankAccount toAccount = bankAccountDao.findById(to);

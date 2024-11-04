@@ -6,7 +6,7 @@ import br.com.fantasticpalmtree.persistence.BankAccountDao;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-public abstract class BaseCommand implements Runnable {
+public abstract class BaseCommand {
     protected ConfigLoader configLoader = ConfigLoader.getInstance();
     protected BankAccountDao bankAccountDao = BankAccountDao.getInstance();
 

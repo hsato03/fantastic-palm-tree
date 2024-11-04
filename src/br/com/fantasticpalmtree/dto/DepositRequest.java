@@ -19,4 +19,8 @@ public final class DepositRequest extends BaseRequest {
     public long getAccount() {
         return account;
     }
+
+    public double getValue() {
+        return value;
+    }
 }

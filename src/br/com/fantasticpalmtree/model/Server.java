@@ -40,16 +40,18 @@ public final class Server {
 
     public void start() {
         while(true){
-            if (!requests.isEmpty()) {
-                BaseRequest request = requests.remove(0);
+            synchronized (requests) {
+                if (!requests.isEmpty()) {
+                    BaseRequest request = requests.remove(0);
 
-                if (request instanceof TransferRequest transferRequest) transferBalance(
-                        transferRequest.getOrigin(),
-                        transferRequest.getTarget(),
-                        transferRequest.getValue());
+                    if (request instanceof TransferRequest transferRequest) transferBalance(
+                            transferRequest.getOrigin(),
+                            transferRequest.getTarget(),
+                            transferRequest.getValue());
 
-                else if (request instanceof DepositRequest depositRequest)
-                    deposit(depositRequest.getAccount(), depositRequest.getAccount());
+                    else if (request instanceof DepositRequest depositRequest)
+                        deposit(depositRequest.getAccount(), depositRequest.getValue());
+                }
             }
             try {
                 Thread.sleep(100, 0);

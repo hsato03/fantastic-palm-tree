@@ -1,6 +1,6 @@
 package br.com.fantasticpalmtree.command;
 
-public class ShowBalanceCommand extends BaseCommand {
+public class ShowBalanceCommand extends BaseCommand implements Runnable {
 
     @Override
     public void run() {
