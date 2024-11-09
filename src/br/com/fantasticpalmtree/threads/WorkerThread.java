@@ -3,34 +3,23 @@ package br.com.fantasticpalmtree.threads;
 import br.com.fantasticpalmtree.config.ConfigLoader;
 import br.com.fantasticpalmtree.config.PropertyConstants;
 
-import java.util.Queue;
+import java.util.Deque;
 
 public class WorkerThread extends Thread {
-    private final Queue<Runnable> taskQueue;
+    private final int serviceInterval = Integer.parseInt(ConfigLoader.getInstance().getProperty(PropertyConstants.SERVICE_INTERVAL)) * 1000;
+    private final Deque<Runnable> taskQueue;
     private volatile boolean isStopped;
 
-    private final int serviceInterval = Integer.parseInt(ConfigLoader.getInstance().getProperty(PropertyConstants.SERVICE_INTERVAL)) * 1000;
-
-    public WorkerThread(Queue<Runnable> taskQueue) {
+    public WorkerThread(Deque<Runnable> taskQueue) {
         this.taskQueue = taskQueue;
     }
 
     public void run() {
-        while (true) {
+        while (!isStopped) {
             Runnable task;
 
             synchronized (taskQueue) {
-                if(isStopped) {
-                    try {
-                        taskQueue.wait();
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-            }
-
-            synchronized (taskQueue) {
-                while (taskQueue.isEmpty() && !isStopped) {
+                while (taskQueue.isEmpty()) {
                     try {
                         taskQueue.wait();
                     } catch (InterruptedException e) {

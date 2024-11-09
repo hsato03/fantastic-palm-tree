@@ -14,20 +14,10 @@ public class BankAccount {
     }
 
     public synchronized void deposit(double value) {
-        try {
-            Thread.sleep(50);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
         this.balance += value;
     }
 
     public synchronized void withdraw(double value) {
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
         this.balance -= value;
     }
 
